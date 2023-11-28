@@ -1,19 +1,13 @@
 const express = require("express");
+const connect = require("./models");
 const cors = require("cors");
-
-const mongoose = require("mongoose");
-const { User } = require("./models/User");
-
-require("dotenv").config();
-
-const mongodbUri = process.env.MONGODB_URI;
-
-mongoose.connect(mongodbUri);
 
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const routers = require("./router");
 
 const app = express();
+connect();
 
 app.get("/", function (req, res) {
   res.send("hello word!!");
@@ -42,6 +36,8 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(routers);
 
 app.use((err, req, res, next) => {
   res.status(400).send({ errorMessage: err });
