@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(routers);
+app.use("/api", routers);
 
 app.use((err, req, res, next) => {
   res.status(400).send({ errorMessage: err });
