@@ -11,7 +11,6 @@ router.get("/users", async (req, res) => {
 router.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log(userId);
     if (!mongoose.isValidObjectId(userId)) {
       return res.status(400).send({ err: "invalid userId" });
     }
@@ -43,7 +42,7 @@ router.delete("/user/:userId", async (req, res) => {
     const user = await User.findOneAndDelete({ _id: userId });
     return res.send({ user });
   } catch {
-    console.log(err);
+    console.error(err);
     return res.status(500).send({ err: err.message });
   }
 });
@@ -79,7 +78,7 @@ router.put("/user/:userId", async (req, res) => {
     await user.save();
     return res.send({ user });
   } catch {
-    console.log(err);
+    console.error(err);
     return res.status(500).send({ err: err.message });
   }
 });
